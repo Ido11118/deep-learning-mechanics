@@ -6,7 +6,7 @@ It was developed as part of an academic assignment focused on understanding and 
 
 ---
 
-## 📌 Implemented Functions
+## 📁 Implemented Functions
 
 - `my_expand_as(A, B)`  
   Manually expands tensor `A` to match the shape of tensor `B` using only allowed tensor operations.
@@ -30,7 +30,7 @@ Instead, it uses only allowed operations such as:
 
 ---
 
-## 🧪 Tests
+## 🚀 Tests
 
 A full test suite is included to validate:
 - Correct behavior of manual broadcasting functions
@@ -39,13 +39,7 @@ A full test suite is included to validate:
 
 ---
 
-## 📂 Files
-
-- `manual-broadcasting-pytorch.ipynb` – Full notebook with implementation, explanations, and tests
-
----
-
-## 🔍 Example
+## 📄 Example
 
 ```python
 A = torch.tensor([[1], [2]])        # shape: [2,1]
@@ -54,3 +48,18 @@ B = torch.tensor([[10, 20, 30]])    # shape: [1,3]
 A_b, B_b = my_broadcast(A, B)
 print(A_b.shape)  # torch.Size([2, 3])
 print(B_b.shape)  # torch.Size([2, 3])
+```
+
+---
+
+## 🧰 Educational Purpose
+
+This exercise deepened our understanding of how broadcasting works under the hood and how to manually manipulate tensor shapes using operations like `unsqueeze`, `stack`, and `select`.
+
+---
+
+## 👤 Author
+
+Ido  
+GitHub: @Ido11118
+
