@@ -1,60 +1,52 @@
-# Manual Broadcasting in PyTorch
+# Sampling and Gradients in PyTorch
 
-This project implements manual tensor broadcasting in PyTorch **without using any built-in broadcasting functions** such as `expand`, `expand_as`, `repeat`, or `torch.broadcast_tensors`.
+This project implements two core deep learning components in PyTorch **from scratch**:
+1. Sampling from a discrete probability distribution
+2. Scalar-based automatic differentiation with backpropagation
 
-It was developed as part of an academic assignment focused on understanding and reproducing the broadcasting behavior of PyTorch tensors from scratch.
+It was developed as part of an academic assignment to explore and replicate internal mechanisms found in deep learning frameworks like PyTorch.
 
 ---
 
-## 📁 Implemented Functions
+## 📁 Implemented Components
 
-- `my_expand_as(A, B)`  
-  Manually expands tensor `A` to match the shape of tensor `B` using only allowed tensor operations.
+### 🎲 Discrete Sampler
 
-- `is_broadcastable(A, B)`  
-  Checks whether two tensors can be broadcast together and returns a boolean and the resulting shape.
+- `my_sampler(size, dist)`  
+  Samples values from a given discrete probability distribution using **inverse transform sampling**.
 
-- `my_broadcast(A, B)`  
-  Manually broadcasts both tensors to their common shape (equivalent to `torch.broadcast_tensors(A, B)`).
+- A histogram visualization is included to confirm that sampled frequencies align with the expected probabilities.
+
+### 🔁 Scalar Autograd Engine
+
+- `MyScalar`  
+  Represents a scalar value in a computation graph. Stores its value, parents, and local derivatives.
+
+- `get_gradient(output)`  
+  Performs recursive backpropagation through the computation graph to compute gradients w.r.t. inputs.
+
+- Supported operations:
+  - Unary: `power`, `exp`, `ln`, `sin`, `cos`
+  - Binary: `add`, `mul`, `div`
+  - Constants: `add_const`, `mul_const`
 
 ---
 
 ## ✅ Constraints
 
-The implementation avoids all built-in broadcasting helpers, including:
-- `expand`, `expand_as`, `repeat`
-- `broadcast_to`, `broadcast_tensors`
-
-Instead, it uses only allowed operations such as:
-- `unsqueeze`, `stack`, `select`, `reshape`, `clone`
+- Sampling uses **no built-in functions** like `torch.multinomial` or `random.choices`.
+- Autograd implementation avoids `.backward()`, `.grad`, or any PyTorch autograd internals.
+- Operations work on scalar values only (not tensors).
 
 ---
 
-## 🚀 Tests
+## 🤐 Educational Purpose
 
-A full test suite is included to validate:
-- Correct behavior of manual broadcasting functions
-- Consistency with PyTorch’s native broadcasting behavior
-- Proper error handling in incompatible cases
+This project helped us gain a deeper understanding of two foundational topics in deep learning:
+- How values are sampled from custom distributions using cumulative probability logic.
+- How gradients flow through a computation graph using the chain rule and backpropagation.
 
----
-
-## 📄 Example
-
-```python
-A = torch.tensor([[1], [2]])        # shape: [2,1]
-B = torch.tensor([[10, 20, 30]])    # shape: [1,3]
-
-A_b, B_b = my_broadcast(A, B)
-print(A_b.shape)  # torch.Size([2, 3])
-print(B_b.shape)  # torch.Size([2, 3])
-```
-
----
-
-## 🧰 Educational Purpose
-
-This exercise deepened our understanding of how broadcasting works under the hood and how to manually manipulate tensor shapes using operations like `unsqueeze`, `stack`, and `select`.
+By recreating these mechanisms manually, we gained better intuition for how high-level libraries work behind the scenes.
 
 ---
 
@@ -62,4 +54,3 @@ This exercise deepened our understanding of how broadcasting works under the hoo
 
 Ido  
 GitHub: [@Ido11118](https://github.com/Ido11118)
-
